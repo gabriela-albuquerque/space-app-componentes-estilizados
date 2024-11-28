@@ -23,7 +23,6 @@ const BarraLateral = () => {
           <ItemNavegacao
             iconeAtivo="/icones/mais-vistas-ativo.png"
             iconeInativo="/icones/mais-vistas-inativo.png"
-            ativo
           >
             Mais vistas
           </ItemNavegacao>
