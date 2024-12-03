@@ -22,6 +22,8 @@ const FundoGradiente = styled.div`
 
 const AppContainer = styled.div`
   width: 1440px;
+  padding: 0 24px;
+  box-sizing: border-box;
   margin: 0 auto;
   max-width: 100%;
 `;
@@ -40,10 +42,15 @@ const ConteudoGaleria = styled.section`
 const App = () => {
   const [fotosDaGaleria, setFotosDaGaleria] = useState(fotos);
   const [fotoSelecionada, setFotoSelecionada] = useState(null);
+
+  const aoAlternarFavorito = (foto) => {
+    console.log(foto);
+  };
+
   return (
     <FundoGradiente>
       <EstilosGlobais />
-      <AppContainer>
+      <AppContainer data-testid="AppContainer">
         <Cabecalho />
         <MainContainer>
           <BarraLateral />
@@ -52,11 +59,18 @@ const App = () => {
               backgroundImage="/imagens/banner.png"
               texto="A galeria mais completa de fotos do espaço!"
             />
-            <Galeria fotos={fotosDaGaleria} />
+            <Galeria
+              aoFotoSelecionada={(foto) => setFotoSelecionada(foto)}
+              aoAlternarFavorito={aoAlternarFavorito}
+              fotos={fotosDaGaleria}
+            />
           </ConteudoGaleria>
         </MainContainer>
       </AppContainer>
-      <ModalZoom foto={fotoSelecionada} />
+      <ModalZoom
+        foto={fotoSelecionada}
+        aoFechar={() => setFotoSelecionada(null)}
+      />
     </FundoGradiente>
   );
 };
