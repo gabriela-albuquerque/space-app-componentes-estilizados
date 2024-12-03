@@ -42,6 +42,10 @@ const Imagem = ({
   aoZoomSolicitado,
   aoAlternarFavorito,
 }) => {
+  const iconeFavorito = refFoto.favorita
+    ? "/icones/favorito-ativo.png"
+    : "/icones/favorito.png";
+
   return (
     <Figure $expandida={expandida}>
       <img src={refFoto.path} alt={refFoto.titulo} />
@@ -50,7 +54,7 @@ const Imagem = ({
         <footer>
           <h4>{refFoto.fonte}</h4>
           <BotaoIcone onClick={() => aoAlternarFavorito(refFoto)}>
-            <img src="/icones/favorito.png" alt="Icone de favorito" />
+            <img src={iconeFavorito} alt="Icone de favorito" />
           </BotaoIcone>
           {!expandida && (
             <BotaoIcone
