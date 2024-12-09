@@ -10,11 +10,11 @@ const HeaderEstilizado = styled.header`
   }
 `;
 
-const Cabecalho = () => {
+const Cabecalho = ({ aoTextoDigitado }) => {
   return (
     <HeaderEstilizado>
       <img src="/imagens/logo.png" alt="Logo SpaceApp" />
-      <CampoTexto />
+      <CampoTexto aoTextoDigitado={aoTextoDigitado} />
     </HeaderEstilizado>
   );
 };

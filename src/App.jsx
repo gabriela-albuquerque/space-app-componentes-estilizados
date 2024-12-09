@@ -6,8 +6,9 @@ import Banner from "./componentes/Banner";
 import Galeria from "./componentes/Galeria";
 
 import fotos from "./fotos.json";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalZoom from "./componentes/ModalZoom";
+import Rodape from "./componentes/Rodape";
 
 const FundoGradiente = styled.div`
   background: linear-gradient(
@@ -23,7 +24,6 @@ const FundoGradiente = styled.div`
 const AppContainer = styled.div`
   width: 1440px;
   padding: 0 24px;
-  box-sizing: border-box;
   margin: 0 auto;
   max-width: 100%;
 `;
@@ -42,6 +42,30 @@ const ConteudoGaleria = styled.section`
 const App = () => {
   const [fotosDaGaleria, setFotosDaGaleria] = useState(fotos);
   const [fotoSelecionada, setFotoSelecionada] = useState(null);
+  const [tagSelecionada, setTagSelecionada] = useState(null);
+  const [texto, setTexto] = useState("");
+
+  useEffect(() => {
+    if (tagSelecionada) {
+      const fotosFiltradas = fotos.filter(
+        (foto) => foto.tagId === tagSelecionada
+      );
+      setFotosDaGaleria(fotosFiltradas);
+    } else {
+      setFotosDaGaleria(fotos);
+    }
+  }, [tagSelecionada]);
+
+  useEffect(() => {
+    const fotosFiltradas = fotos.filter((foto) =>
+      foto.titulo.toLowerCase().includes(texto.toLowerCase())
+    );
+    setFotosDaGaleria(fotosFiltradas);
+  }, [texto]);
+
+  const aoTextoDigitado = (novoTexto) => {
+    setTexto(novoTexto);
+  };
 
   const aoAlternarFavorito = (foto) => {
     if (foto.id === fotoSelecionada?.id) {
@@ -67,7 +91,7 @@ const App = () => {
     <FundoGradiente>
       <EstilosGlobais />
       <AppContainer data-testid="AppContainer">
-        <Cabecalho />
+        <Cabecalho aoTextoDigitado={aoTextoDigitado} />
         <MainContainer>
           <BarraLateral />
           <ConteudoGaleria>
@@ -78,11 +102,13 @@ const App = () => {
             <Galeria
               aoFotoSelecionada={(foto) => setFotoSelecionada(foto)}
               aoAlternarFavorito={aoAlternarFavorito}
+              aoTagSelecionada={setTagSelecionada}
               fotos={fotosDaGaleria}
             />
           </ConteudoGaleria>
         </MainContainer>
       </AppContainer>
+      <Rodape />
       <ModalZoom
         foto={fotoSelecionada}
         aoFechar={() => setFotoSelecionada(null)}

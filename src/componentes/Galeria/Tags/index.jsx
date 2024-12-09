@@ -40,13 +40,18 @@ const BotaoEstilizado = styled.button`
   }
 `;
 
-const Tags = () => {
+const Tags = ({ aoTagSelecionada }) => {
   return (
     <AreaTags>
       <TagTitulo>Busque por tags:</TagTitulo>
       <ContainerTags>
         {tags.map((tag) => (
-          <BotaoEstilizado key={tag.id}>{tag.titulo}</BotaoEstilizado>
+          <BotaoEstilizado
+            key={tag.id}
+            onClick={() => aoTagSelecionada(tag.id)}
+          >
+            {tag.titulo}
+          </BotaoEstilizado>
         ))}
       </ContainerTags>
     </AreaTags>
